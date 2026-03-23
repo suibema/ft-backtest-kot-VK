@@ -1,35 +1,16 @@
-function getTelegramUserId() {
-  return window.Telegram?.WebApp?.initDataUnsafe?.user?.id || null;
-}
-
-async function detectPlatformUser() {
-  const telegramUserId = getTelegramUserId();
-
-  if (telegramUserId) {
-    const tg = window.Telegram.WebApp;
-    tg.ready();
-    tg.expand();
-
-    window.userPlatform = 'telegram';
-    window.platformUserId = telegramUserId;
-    window.tgUserId = telegramUserId;
-    window.tgUserStartParam = tg.initDataUnsafe?.start_param || '';
-    return;
+async function detectVKUser() {
+  if (!window.vkBridge) {
+    throw new Error('Не удалось определить VK Bridge. Открой форму из VK.');
   }
 
-  if (window.vkBridge) {
-    const bridge = window.vkBridge;
-    await bridge.send('VKWebAppInit');
-    const vkUser = await bridge.send('VKWebAppGetUserInfo');
+  const bridge = window.vkBridge;
+  await bridge.send('VKWebAppInit');
+  const vkUser = await bridge.send('VKWebAppGetUserInfo');
 
-    window.userPlatform = 'vk';
-    window.platformUserId = vkUser?.id || null;
-    window.vkUserId = vkUser?.id || null;
-    window.tgUserStartParam = '';
-    return;
-  }
-
-  throw new Error('Не удалось определить платформу. Открой форму из Telegram или VK.');
+  window.userPlatform = 'vk';
+  window.platformUserId = vkUser?.id || null;
+  window.vkUserId = vkUser?.id || null;
+  window.tgUserStartParam = '';
 }
 
 function getEmptyAnswerValue(questionNumber) {
@@ -37,24 +18,16 @@ function getEmptyAnswerValue(questionNumber) {
   return checkboxQuestions.includes(questionNumber) ? [] : '';
 }
 
-function buildIntroPayload(platform, userId) {
+function buildIntroPayload(userId) {
   const answers = {};
 
   for (let i = 1; i <= 50; i++) {
     answers[`q${i}`] = getEmptyAnswerValue(i);
   }
 
-  const platformParams = {};
-
-  if (platform === 'telegram') {
-    platformParams.tg_id = Number(userId) || 0;
-  } else if (platform === 'vk') {
-    platformParams.vk_id = Number(userId) || 0;
-  }
-
   return {
     params: {
-      ...platformParams,
+      vk_id: Number(userId) || 0,
       score: null,
       stage_name: 'результат кот',
       ...answers
@@ -62,8 +35,8 @@ function buildIntroPayload(platform, userId) {
   };
 }
 
-async function sendIntroRequest(platform, userId) {
-  const payload = buildIntroPayload(platform, userId);
+async function sendIntroRequest(userId) {
+  const payload = buildIntroPayload(userId);
 
   const response = await fetch('https://webhooks.fut.ru/ft-dispather/requests', {
     method: 'POST',
@@ -100,7 +73,7 @@ async function sendIntroRequest(platform, userId) {
 
 document.addEventListener('DOMContentLoaded', async () => {
   try {
-    await detectPlatformUser();
+    await detectVKUser();
 
     console.log('platform:', window.userPlatform);
     console.log('platform-id:', window.platformUserId);
@@ -117,15 +90,15 @@ document.getElementById('email-form').addEventListener('submit', async function 
 
   const submitBtn = this.querySelector('button[type="submit"]');
 
-  if (!window.platformUserId || !window.userPlatform) {
-    errorEl.textContent = 'Не удалось получить ID пользователя. Открой форму снова из приложения.';
+  if (!window.platformUserId) {
+    errorEl.textContent = 'Не удалось получить ID пользователя. Открой форму снова из VK.';
     return;
   }
 
   try {
     if (submitBtn) submitBtn.disabled = true;
 
-    const result = await sendIntroRequest(window.userPlatform, window.platformUserId);
+    const result = await sendIntroRequest(window.platformUserId);
     console.log('Intro webhook result:', result);
 
     if (result.isDuplicate) {
