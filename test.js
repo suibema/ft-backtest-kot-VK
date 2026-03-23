@@ -17,11 +17,10 @@ const questionTypes = {};
 ['q5', 'q10', 'q11', 'q12', 'q15', 'q16', 'q18', 'q19', 'q21', 'q22', 'q25', 'q27', 'q31', 'q33', 'q35', 'q37', 'q39', 'q40', 'q42', 'q44', 'q45', 'q46', 'q49', 'q50'].forEach(q => questionTypes[q] = 'text');
 ['q29', 'q32', 'q47'].forEach(q => questionTypes[q] = 'checkbox');
 
-// Redirect if no tg_id
-const email = localStorage.getItem('test_email');
-if (!email) window.location.href = 'index.html';
+// Redirect if no vk_id
+const vkId = localStorage.getItem('test_email');
+if (!vkId) window.location.href = 'index.html';
 
-// Save form data
 function saveForm() {
   const formData = new FormData(form);
   const data = {};
@@ -38,7 +37,6 @@ function saveForm() {
   localStorage.setItem('test_data', JSON.stringify(data));
 }
 
-// Restore form data
 function restoreForm() {
   const saved = JSON.parse(localStorage.getItem('test_data') || '{}');
 
@@ -57,14 +55,12 @@ function restoreForm() {
   }
 }
 
-// Format time as MM:SS
 function formatTime(seconds) {
   const min = Math.floor(seconds / 60).toString().padStart(2, '0');
   const sec = (seconds % 60).toString().padStart(2, '0');
   return `${min}:${sec}`;
 }
 
-// Timer logic
 function startTimer() {
   if (!localStorage.getItem('start_time')) {
     localStorage.setItem('start_time', Date.now());
@@ -87,7 +83,6 @@ function startTimer() {
   }, 1000);
 }
 
-// Get answers from form
 function collectAnswers() {
   const formData = new FormData(form);
   const data = {};
@@ -104,7 +99,6 @@ function collectAnswers() {
   return data;
 }
 
-// Calculate score
 function calculateScore(data) {
   let score = 0;
 
@@ -132,10 +126,10 @@ function calculateScore(data) {
   return score;
 }
 
-function buildFinalPayload(tgId, data, score) {
+function buildFinalPayload(vkIdValue, data, score) {
   return {
     params: {
-      tg_id: Number(tgId),
+      vk_id: Number(vkIdValue) || 0,
       score: score,
       stage_name: 'результат кот',
       ...data
@@ -143,8 +137,8 @@ function buildFinalPayload(tgId, data, score) {
   };
 }
 
-async function sendFinalRequest(tgId, data, score) {
-  const payload = buildFinalPayload(tgId, data, score);
+async function sendFinalRequest(vkIdValue, data, score) {
+  const payload = buildFinalPayload(vkIdValue, data, score);
 
   const response = await fetch('https://webhooks.fut.ru/ft-dispather/requests', {
     method: 'POST',
@@ -174,13 +168,11 @@ async function sendFinalRequest(tgId, data, score) {
   };
 }
 
-// Submit form
 async function submitForm(auto = false) {
   const data = collectAnswers();
-  const tgId = email;
   const score = calculateScore(data);
 
-  console.log('Submitting final test payload', { tg_id: tgId, score, ...data });
+  console.log('Submitting final test payload', { vk_id: vkId, score, ...data });
 
   const submitBtn = document.querySelector('button[type="submit"]');
   if (submitBtn) {
@@ -189,7 +181,7 @@ async function submitForm(auto = false) {
   }
 
   try {
-    const result = await sendFinalRequest(tgId, data, score);
+    const result = await sendFinalRequest(vkId, data, score);
 
     if (!result.ok) {
       console.error('Final webhook error:', result);
@@ -219,7 +211,6 @@ async function submitForm(auto = false) {
   }
 }
 
-// Event listeners
 form.addEventListener('keydown', function (e) {
   if (e.key === 'Enter') {
     e.preventDefault();
@@ -245,6 +236,5 @@ document.addEventListener('visibilitychange', () => {
   }
 });
 
-// Initialize
 restoreForm();
 startTimer();
