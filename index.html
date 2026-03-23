@@ -782,7 +782,6 @@
           return;
         }
 
-        localStorage.setItem('test_submitted', 'true');
         localStorage.removeItem('start_time');
         localStorage.removeItem('test_data');
         localStorage.removeItem('remaining_time');
@@ -868,15 +867,7 @@
     });
 
     document.addEventListener('DOMContentLoaded', async () => {
-      if (localStorage.getItem('test_submitted') === 'true') {
-        showView('view-finish');
-      } else if (localStorage.getItem('test_email')) {
-        showView('view-test');
-        restoreForm();
-        startTimer();
-      } else {
-        showView('view-start');
-      }
+      showView('view-start');
 
       try {
         await detectVKUser();
