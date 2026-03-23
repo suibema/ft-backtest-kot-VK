@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VK Test App</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
+  <style>
+    .page-view[hidden] { display:none !important; }
+  </style>
+</head>
+<body>
+  <section id="view-start" class="page-view">
+    <img src="FT20LOGO@4x.png" width="100"><br>
+    <h2>Тестирование</h2>
+    <form id="email-form">
+      <label style="text-align: center;"><b>ОБЯЗАТЕЛЬНО ДЛЯ ОЗНАКОМЛЕНИЯ</b></label>
+      <label>Тебе предлагается решить 50 несложных заданий, требующих определенных знаний, внимания и сообразительности. В некоторых заданиях предлагаются "готовые" варианты ответов, среди которых следует выбрать правильные, в других заданиях ответ необходимо дать самостоятельно, но во всех случаях найденные тобой ответы следует отметить в соответствующем окошке для ответа.
+        <br>
+        <br><b>На выполнение теста тебе отводится 15 минут!</b>
+        <br>
+        <br>Постарайся за это время выполнить как можно больше заданий. Не трать много времени на одно задание - если испытываешь затруднения, можешь некоторые из них пропустить.
+        <br>
+        <br><b>Hint: для удобства подготовь калькулятор для небольших вычислений и блокнот для записей.</b>
+      </label>
+        <br>
+      <button type="submit">НАЧАТЬ</button>
+    </form>
+    <p id="email-error" style="color: red;"></p>
+  </section>
+
+  <section id="view-test" class="page-view" hidden>
+    <div id="timer">
+      Время: <span id="time-display">15:00</span>
+    </div>
+    <form id="test-form">
+      <label>1. Десятый месяц года – это[...]</label>
+      <select name="q1">
+        <option value="">- выбрать -</option>
+        <option value="a">Октябрь</option>
+        <option value="b">Май</option>
+        <option value="c">Ноябрь</option>
+        <option value="d">Февраль</option>
+        <option value="e">Июль</option>
+      </select>
+
+      <label>2. «Деликатный» является противоположным по значению слову:</label>
+      <select name="q2">
+        <option value="">- выбрать -</option>
+        <option value="a">Корректный</option>
+        <option value="b">Любезный</option>
+        <option value="c">Жесткий</option>
+        <option value="d">Тактичный</option>
+        <option value="e">Мягкий</option>
+      </select>
+
+      <label>3. Какое из приведенных ниже слов отлично от других?</label>
+      <select name="q3">
+        <option value="">- выбрать -</option>
+        <option value="a">Непосредственный</option>
+        <option value="b">Естественный</option>
+        <option value="c">Раскованный</option>
+        <option value="d">Неприкаянный</option>
+        <option value="e">Непринужденный</option>
+      </select>
+
+      <label>4.&nbsp;Ответьте ДА или НЕТ: верно ли то, что 1629 год относится к XVI веку?</label>
+      <select name="q4">
+        <option value="">- выбрать -</option>
+        <option value="a">Да</option>
+        <option value="b">Нет</option>
+      </select>
+
+      <label>5.&nbsp;Какое из приведенных ниже слов отлично от других? В ответе укажите расшифрованное слово.
+          <p>TРБА</p>
+          <p>КПИРАКС</p>
+          <p>ТРСАЕС</p>
+          <p>АТМЬ</p>
+          <p>НКВЧУА</p>
+      </label>
+      <input type="text" name="q5"/>
+
+      <label>6. Какое из приведенных ниже слов не является синонимом слова «беспрекословный»?</label>
+      <select name="q6">
+        <option value="">- выбрать -</option>
+        <option value="a">Послушный</option>
+        <option value="b">Покорный</option>
+        <option value="c">Молчаливый</option>
+        <option value="d">Безоговорочный</option>
+        <option value="e">Неукоснительный</option>
+      </select>
+
+      <label>7. Какое из приведенных ниже слов относится к слову «лампочка» как «звук» к «скрипка»?</label>
+      <select name="q7">
+        <option value="">- выбрать -</option>
+        <option value="a">Электричество</option>
+        <option value="b">Плафон</option>
+        <option value="c">Свет</option>
+        <option value="d">Шум</option>
+        <option value="e">Яркий</option>
+      </select>
+
+      <label>8.&nbsp;Сколько из приведенных ниже пар слов являются полностью идентичными?
+          <p>Garcia I.L. &nbsp;Carcia I.L.</p>
+          <p>Filder E.K. &nbsp;Fidler E.K.</p>
+          <p>Wilson V.G. &nbsp;Wilson V.G.</p>
+          <p>Mitchell O.Y. &nbsp;Mitchell O.Y.</p>
+          <p> Robinson B.S. &nbsp;Robinzon B.S.</p>
+      </label>
+      <select name="q8">
+        <option value="">- выбрать -</option>
+        <option value="a">0</option>
+        <option value="b">1</option>
+        <option value="c">2</option>
+        <option value="d">3</option>
+        <option value="e">4</option>
+        <option value="f">5</option>
+      </select>
+
+      <label>9.&nbsp;«Скорый» является противоположным по смыслу слову:</label>
+      <select name="q9">
+        <option value="">- выбрать -</option>
+        <option value="a">Беглый</option>
+        <option value="b">Торопливый</option>
+        <option value="c">Тихий</option>
+        <option value="d">Быстрый</option>
+        <option value="e">Мгновенный</option>
+      </select>
+
+      <label>10.&nbsp;Предприниматель купил 16 телефонов за 4000 долларов, а продал их за 6000 долларов. Сколько он заработал за каждый телефон?
+        <br>В ответ впиши только целое число. Например: 100.
+      </label>
+      <input type="text" name="q10"/>
+
+      <label>11.&nbsp;Вставьте фрагмент, который служил бы окончанием первого слова и началом второго.
+          <p>СТАРО (…) НОК</p>
+      </label>
+      <input type="text" name="q11"  />
+
+      <label>12.&nbsp;1,5 дюжины апельсинов стоит 3,6 рубля. Сколько (в копейках) стоят 4 апельсина?
+        <br>В ответ впиши только целое число. Например: 100.
+      </label>
+      <input type="text" name="q12"  />
+
+      <label>13.&nbsp;Сколько из этих шести пар чисел являются полностью одинаковыми?
+          <p>8032384224 &nbsp;8032384224</p>
+          <p>11971421 &nbsp;11917421</p>
+          <p>7354256 &nbsp;7354256</p>
+          <p>898526 &nbsp;898626</p>
+          <p>42427 &nbsp;42247</p>
+          <p>3269 &nbsp;3296 </p>
+      </label>
+      <select name="q13" >
+        <option value="">- выбрать -</option>
+        <option value="a">0</option>
+        <option value="b">1</option>
+        <option value="c">2</option>
+        <option value="d">3</option>
+        <option value="e">4</option>
+        <option value="f">5</option>
+        <option value="g">6</option>
+      </select>
+
+      <label>14.&nbsp;«Свежий» является противоположным по значению слову:</label>
+      <select name="q14" >
+        <option value="">- выбрать -</option>
+        <option value="a">Новый</option>
+        <option value="b">Чистый</option>
+        <option value="c">Холодный</option>
+        <option value="d">Душный</option>
+        <option value="e">Молодой</option>
+      </select>
+
+      <label>15.&nbsp;Какое число является наименьшим? В качестве ответа впишите это число.
+          <p>2    1/13    0,07    1,1    0,41   17/4</p>
+      </label>
+      <input type="text" name="q15"  />
+
+      <label>16.&nbsp;Расставьте предлагаемые ниже слова в таком порядке, чтобы получилось правильное предложение. В качестве ответа выберите <b>последнее</b> слово получившегося предложения.
+          <p>Никогда   поздно   чем  лучше.</p>
+      </label>
+      <input type="text" name="q16"  />
+
+      <label>17.&nbsp;&nbsp;Исключите лишнюю фигуру:</label>
+      <img src="0866357604a23dfc22ebe8424e7933a1.png" width="600"><br>
+      <select name="q17" >
+        <option value="">- выбрать -</option>
+        <option value="a">1</option>
+        <option value="b">2</option>
+        <option value="c">3</option>
+        <option value="d">4</option>
+        <option value="e">5</option>
+      </select>
+
+      <label>18.&nbsp; У Маши было 8 яблок. Когда она отдала Пете половину, у него стало в 3 раза больше, чем было. Сколько яблок было у Пети?
+        <br>В ответ впиши только целое число. Например: 100.
+      </label>
+      <input type="text" name="q18"  />
+
+      <label>19. Вставьте слово, которое означало бы то же, что и слова, стоящие вне скобок
+          <p>ЖИВОТНОЕ (…..) НЕЖНОСТЬ</p>
+      </label>
+      <input type="text" name="q19"  />
+
+      <label>20. Расставьте предлагаемые ниже слова в таком порядке, чтобы получилось утверждение.
+          <label><i>Лежачий   под   течет   камень   не   вода.</i></label>
+          <label>Правильно ли это утверждение?</label>
+      </label>
+      <select name="q20" >
+        <option value="">- выбрать -</option>
+        <option value="a">Правильно</option>
+        <option value="b">Неправильно</option>
+      </select>
+
+      <label>21. Две из приведенных ниже фраз имеют одинаковый смысл, найдите их.
+        <br>Напиши номера ответов подряд без пробелов. Например: 12345.
+          <p>1) Ведрами ветра не смеряешь.</p>
+          <p>2) Что посеешь, то и пожнешь.</p>
+          <p>3) Добрая слава бежит, а худая - летит.</p>
+          <p>4) За делами дня не видно.</p>
+          <p>5) Как свистнуло, так и гаркнуло.</p>
+          <p>6) Заварил кашу - не жалей масла.</p>
+      </label>
+      <input type="text" name="q21"  />
+
+      <label>22.&nbsp;Какое число должно стоять вместо знака «?»:
+          <p>99    91    83    <b>?</b>    67    59</p>
+      </label>
+      <input type="text" name="q22"  />
+
+      <label>23.&nbsp;Верно ли, что Млечный путь – это галактика?
+      </label>
+      <select name="q23" >
+        <option value="">- выбрать -</option>
+        <option value="a">Верно</option>
+        <option value="b">Не верно</option>
+      </select>
+
+      <label>24. Предположим, что первые два утверждения верны:
+          <p><i>Все ежи - грызуны. Все ежи имеют колючки. Все грызуны имеют колючки.</i></p>
+          <p>Тогда заключительное будет:</p>
+      </label>
+      <select name="q24" >
+        <option value="">- выбрать -</option>
+        <option value="a">Верно</option>
+        <option value="b">Не верно</option>
+        <option value="c">Неопределенно</option>
+      </select>
+
+      <label>25. Автомобиль покрывает 18 м за 1/3 секунды. Если он будет ехать с той же скоростью,то какое расстояние (в километрах) он пройдет за 5 секунд?
+        <br>В ответ впиши только число, округлив его до двух знаков после запятой. В качестве разделителя используй запятую. Например: 1,25.
+      </label>
+      <input type="text" name="q25"  />
+
+      <label>26. Предположим, что первые два утверждения верны:
+          <p><i>Витя такого же роста, как Дима. Лера выше Димы. Лера ниже Вити.</i></p>
+          <p>Тогда заключительное будет:</p>
+      </label>
+      <select name="q26" >
+        <option value="">- выбрать -</option>
+        <option value="a">Верно</option>
+        <option value="b">Не верно</option>
+        <option value="c">Неопределенно</option>
+      </select>
+
+      <label>27.&nbsp;Четыре трехсотграммовые упаковки винограда стоят 6 рублей.
+          <p>Сколько грамм винограда можно купить за 75 копеек?
+          <br>В ответ впиши только целое число. Например: 100.</p>
+      </label>
+      <input type="text" name="q27"  />
+
+      <label>28.&nbsp;Слова «абонент» и «абонемент» по своему смыслу:
+      </label>
+      <select name="q28" >
+        <option value="">- выбрать -</option>
+        <option value="a">Схожи</option>
+        <option value="b">Противоположны</option>
+        <option value="c">Ни схожи, ни противоположны</option>
+      </select>
+
+      <label>29.&nbsp;Выберите из представленных ниже фигур те, которые являются развертками куба.
+      </label>
+      <img src="9011e8e6d925cc6067cf490830300be7.png" width="600"><br>
+      <ul class="question-list">
+      <li class="question-list__item">
+        <input type="checkbox" name="q29" value="a" id="q29-a">
+        <label for="q29-a">1</label>
+      </li>
+      <li class="question-list__item">
+        <input type="checkbox" name="q29" value="b" id="q29-b">
+        <label for="q29-b">2</label>
+      </li>
+      <li class="question-list__item">
+        <input type="checkbox" name="q29" value="c" id="q29-c">
+        <label for="q29-c">3</label>
+      </li>
+      <li class="question-list__item">
+        <input type="checkbox" name="q29" value="d" id="q29-d">
+        <label for="q29-d">4</label>
+      </li>
+    </ul>
+
+      <label>30. Предположим, что первые два утверждения верны:
+        <p><i>Ни один учащийся школы не является студентом вуза. Петя Иванов – студент ВУЗа. Петя Иванов – не учащийся школы.</i></p>
+        <p>Тогда заключительное будет:</p>
+    </label>
+    <select name="q30" >
+      <option value="">- выбрать -</option>
+      <option value="a">Верно</option>
+      <option value="b">Не верно</option>
+      <option value="c">Неопределенно</option>
+    </select>
+
+      <label>31.&nbsp;Кондиционер стоимостью 17000 рублей, был уценен во время сезонной распродажи на 26 и 1/5 %. Сколько стоил кондиционер во время распродажи?
+        <br>В ответ впиши только целое число. Например: 10000.
+    </label>
+    <input type="text" name="q31"  />
+
+      <label>32.&nbsp;Какие из представленных ниже фигур нужно соединить, чтобы получился параллелограмм?
+      </label>
+      <img src="d398b376edb01ccc654f7070432e9a95.png" width="600"><br>
+      <ul class="question-list">
+        <li class="question-list__item">
+          <input type="checkbox" name="q32" value="a" id="q32-a">
+          <label for="q32-a">1</label>
+        </li>
+        <li class="question-list__item">
+          <input type="checkbox" name="q32" value="b" id="q32-b">
+          <label for="q32-b">2</label>
+        </li>
+        <li class="question-list__item">
+          <input type="checkbox" name="q32" value="c" id="q32-c">
+          <label for="q32-c">3</label>
+        </li>
+        <li class="question-list__item">
+          <input type="checkbox" name="q32" value="d" id="q32-d">
+          <label for="q32-d">4</label>
+        </li>
+        <li class="question-list__item">
+          <input type="checkbox" name="q32" value="e" id="q32-e">
+          <label for="q32-e">5</label>
+        </li>
+      </ul>
+
+
+      <label>33.&nbsp;Из 28 метров картона изготовили 21 коробку. Сколько картона требуется на изготовление одной коробки?
+        <br>В ответ впиши только число, округлив его до двух знаков после запятой. Например: 1,25.
+    </label>
+    <input type="text" name="q33"  />
+
+    <label>34. Значения следующих двух предложений:
+      <p><i>Где тонко — там и рвётся.</i></p>
+      <p><i>Цепь так же крепка как и её самое слабое звено.</i></p>
+    </label>
+    <select name="q34" >
+      <option value="">- выбрать -</option>
+      <option value="a">Сходны</option>
+      <option value="b">Противоположны</option>
+      <option value="c">Ни сходны, ни противоположны</option>
+    </select>
+
+      <label>35.&nbsp;Какое из приведенных ниже слов отлично от других? В ответе укажите расшифрованное слово.
+          <p>ЛЕОР</p>
+          <p>БЕОРОЙВ</p>
+          <p>КОВАОРЖОН</p>
+          <p>ФЕЛИНДЬ</p>
+      </label>
+      <input type="text" name="q35"  />
+
+      <label>36.&nbsp;Смысл двух английских пословиц:
+        <p><i>Трава всегда зеленее на другой стороне холма.</i></p>
+        <p><i>Дарёному коню в зубы не смотрят.</i></p>
+      </label>
+      <select name="q36" >
+        <option value="">- выбрать -</option>
+        <option value="a">Схож</option>
+        <option value="b">Противоположен</option>
+        <option value="c">Ни схож, ни противоположен</option>
+      </select>
+
+      <label>37.&nbsp;Бакалейщик купил ящик с апельсинами за 36 рублей. В ящике их было 12 дюжин. Он знает, что 2 дюжины испортятся еще до того, как он продаст все апельсины. По какой цене за дюжину (в копейках) ему нужно продавать апельсины, чтобы получить прибыль в 1/3 закупочной цены?
+      <br>В ответ впиши только целое число. Например: 100.
+      </label>
+      <input type="text" name="q37"  />
+
+      <label>38.&nbsp;«Гордость» и «горделивый». Эти слова по своему значению:
+      </label>
+      <select name="q38" >
+        <option value="">- выбрать -</option>
+        <option value="a">Сходны</option>
+        <option value="b">Противоположны</option>
+        <option value="c">Ни сходны, ни противоположны</option>
+      </select>
+
+      <label>39.&nbsp;Если бы полкило апельсинов стоило 0,015 рублей, то сколько целых килограммов можно было бы купить за 60 копеек?
+      <br>В ответ впиши только целое число. Например: 100.
+      </label>
+      <input type="text" name="q39"  />
+
+      <label>40.&nbsp;Один из членов ряда не подходит к другим. Каким числом вы бы его заменили?
+        <p>1/3   1/6   1/6   1/3   1/6   1/6  1/6  1/3   1/6   1/9  1/6  1/6  1/3</p>
+      </label>
+      <input type="text" name="q40"  />
+
+      <label>41.&nbsp;«Торопливый» и «расторопный». Эти слова являются:
+      </label>
+      <select name="q41" >
+        <option value="">- выбрать -</option>
+        <option value="a">Сходными</option>
+        <option value="b">Противоположными</option>
+        <option value="c">Ни сходными, ни противоположными</option>
+      </select>
+
+      <label>42.&nbsp;Какова длина гипотенузы прямоугольного треугольника, вписанного в круг радиусом 5см? Ответ укажите в метрах.
+        <br>В ответ впиши только число, округлив его до одного знака после запятой. Например: 1,2.
+      </label>
+      <input type="text" name="q42"  />
+
+      <label>43.&nbsp;Следующие две фразы по значению:
+        <p><i>Цыплят по осени считают.</i></p>
+        <p><i>He говори «гоп», пока не перепрыгнешь.</i></p>
+      </label>
+      <select name="q43" >
+        <option value="">- выбрать -</option>
+        <option value="a">Сходны</option>
+        <option value="b">Противоположны</option>
+        <option value="c">Ни сходны, ни противоположны</option>
+      </select>
+
+      <label>44.&nbsp;Студент, играя в наперстки, выигрывает в 20% случаев. При каждом выигрыше он получает 100 р. Сколько раз студент должен сыграть, чтобы получить 1000 р?
+        <br>В ответ впиши только целое число. Например: 100.
+      </label>
+      <input type="text" name="q44"  />
+
+      <label>45.&nbsp;Один из членов ряда не подходит к другим. Каким числом вы бы его заменили?
+        <p>4    9    16    21    36    49</p>
+      </label>
+      <input type="text" name="q45"  />
+
+      <label>46.&nbsp;Три партнера разделили полученную от бизнеса прибыль, которая составила 12000 руб., пропорционально вкладам. A вложил в дело 5000 руб, B – 3500 руб. Если бы партнеры решили поделить прибыль поровну, то С получил бы на 500 руб больше. Сколько вложил в бизнес С?
+      <br>В ответ впиши только целое число, без пробелов. Например: 10000.
+      </label>
+      <input type="text" name="q46"  />
+
+      <label>47. Какие две из приведенных ниже пословиц имеют сходный смысл:
+      </label>
+      <ul class="question-list">
+        <li class="question-list__item">
+          <input type="checkbox" name="q47" value="a" id="q47-a">
+          <label for="q47-a">Семеро одного не ждут.</label>
+        </li>
+        <li class="question-list__item">
+          <input type="checkbox" name="q47" value="b" id="q47-b">
+          <label for="q47-b">Над нами не каплет, можно подождать.</label>
+        </li>
+        <li class="question-list__item">
+          <input type="checkbox" name="q47" value="c" id="q47-c">
+          <label for="q47-c">Мы люди не гордые: нету хлеба - подавай пироги.</label>
+        </li>
+        <li class="question-list__item">
+          <input type="checkbox" name="q47" value="d" id="q47-d">
+          <label for="q47-d">Мольбою прав не будешь.</label>
+        </li>
+        <li class="question-list__item">
+          <input type="checkbox" name="q47" value="e" id="q47-e">
+          <label for="q47-e">Работа не волк, в лес не убежит.</label>
+        </li>
+        <li class="question-list__item">
+          <input type="checkbox" name="q47" value="f" id="q47-f">
+          <label for="q47-f">Моя хата с краю - ничего не знаю.</label>
+        </li>
+      </ul>
+
+      <label>48.&nbsp;Значение следующих фраз:
+        <p><i>Не спеши языком, торопись делом.</i></p>
+        <p><i>Делу время, потехе час.</i></p>
+      </label>
+      <select name="q48" >
+        <option value="">- выбрать -</option>
+        <option value="a">Сходно</option>
+        <option value="b">Противоположно</option>
+        <option value="c">Ни сходно, ни противоположно</option>
+      </select>
+
+      <label>49. Вставьте пропущенную фигуру из четырех пронумерованных, имея в виду, что в верхнем ряду первая фигура относится ко второй так же, как третья к пропущенной.
+      </label>
+      <img src="be5895d5871150ae3e7534a6fccbc74a.png" width="600"><br>
+      <input type="text" name="q49"  />
+
+      <label>50. В печатающейся статье 24 000 слов. Редактор решил использовать шрифт двух размеров. При использовании шрифта большого размера на странице умещается 900 слов, меньшего – 1200. Статья должна занять 21 полную страницу в журнале. Сколько страниц должно быть напечатано мелким шрифтом?
+      <br>В ответ впиши только целое число. Например: 100.
+      </label>
+      <input type="text" name="q50"  />
+
+      <button type="submit">ЗАВЕРШИТЬ</button>
+    </form>
+
+    <p id="result"></p>
+    <p id="error"></p>
+  </section>
+
+  <section id="view-finish" class="page-view" hidden>
+    <div style="margin: 0; height: 13vh; display: flex; align-items: center; justify-content: center;"></div>
+    <h2 style="text-align: center;">Спасибо, твой тест успешно принят!</h2>
+    <br>
+    <img src="12_happy_2_Монтажная область 1.png" width="250"><br>
+  </section>
+
+  <script>
+    function showView(viewId) {
+      document.querySelectorAll('.page-view').forEach(el => {
+        el.hidden = el.id !== viewId;
+      });
+      window.scrollTo(0, 0);
+    }
+
+    async function detectVKUser() {
+      if (!window.vkBridge) {
+        throw new Error('Не удалось определить VK Bridge. Открой форму из VK.');
+      }
+
+      const bridge = window.vkBridge;
+      await bridge.send('VKWebAppInit');
+      const vkUser = await bridge.send('VKWebAppGetUserInfo');
+
+      window.userPlatform = 'vk';
+      window.platformUserId = vkUser?.id || null;
+      window.vkUserId = vkUser?.id || null;
+      window.tgUserStartParam = '';
+    }
+
+    function getEmptyAnswerValue(questionNumber) {
+      const checkboxQuestions = [29, 32, 47];
+      return checkboxQuestions.includes(questionNumber) ? [] : '';
+    }
+
+    function buildIntroPayload(userId) {
+      const answers = {};
+
+      for (let i = 1; i <= 50; i++) {
+        answers[`q${i}`] = getEmptyAnswerValue(i);
+      }
+
+      return {
+        params: {
+          vk_id: Number(userId) || 0,
+          score: null,
+          stage_name: 'результат кот',
+          ...answers
+        }
+      };
+    }
+
+    async function sendIntroRequest(userId) {
+      const payload = buildIntroPayload(userId);
+
+      const response = await fetch('https://webhooks.fut.ru/ft-dispather/requests', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      let body = null;
+
+      try {
+        body = await response.json();
+      } catch (_) {
+        try {
+          body = await response.text();
+        } catch (_) {
+          body = null;
+        }
+      }
+
+      const duplicateMessage =
+        body?.message === 'На данный этап запрещено повторно подавать заявку' ||
+        body?.errors?.user_request?.includes('На данный этап запрещено повторно подавать заявку');
+
+      return {
+        ok: response.ok,
+        status: response.status,
+        body,
+        isDuplicate: response.status === 422 && duplicateMessage
+      };
+    }
+
+    const form = document.getElementById('test-form');
+    const resultEl = document.getElementById('result');
+    const errorEl = document.getElementById('error');
+    const timeDisplay = document.getElementById('time-display');
+    const DURATION = 15 * 60;
+
+    const correctAnswers = {
+      q1: 'a', q2: 'c', q3: 'd', q4: 'b', q5: 'скрипка', q6: 'c', q7: 'c', q8: 'c', q9: 'c', q10: '125',
+      q11: 'ста', q12: '80', q13: 'c', q14: 'd', q15: '0,07', q16: 'никогда', q17: 'a', q18: '2', q19: 'ласка', q20: 'a',
+      q21: '25', q22: '75', q23: 'a', q24: 'c', q25: '0,27', q26: 'b', q27: '150', q28: 'c', q29: 'abd', q30: 'a',
+      q31: '12546', q32: 'ad', q33: '1,33', q34: 'a', q35: 'дельфин', q36: 'c', q37: '480', q38: 'c', q39: '20', q40: '1/6',
+      q41: 'c', q42: '0,1', q43: 'a', q44: '50', q45: '25', q46: '3500', q47: 'be', q48: 'c', q49: '2', q50: '17'
+    };
+
+    const questionTypes = {};
+    ['q1', 'q2', 'q3', 'q4', 'q6', 'q7', 'q8', 'q9', 'q13', 'q14', 'q17', 'q20', 'q23', 'q24', 'q26', 'q28', 'q30', 'q34', 'q36', 'q38', 'q41', 'q43', 'q48'].forEach(q => questionTypes[q] = 'dropdown');
+    ['q5', 'q10', 'q11', 'q12', 'q15', 'q16', 'q18', 'q19', 'q21', 'q22', 'q25', 'q27', 'q31', 'q33', 'q35', 'q37', 'q39', 'q40', 'q42', 'q44', 'q45', 'q46', 'q49', 'q50'].forEach(q => questionTypes[q] = 'text');
+    ['q29', 'q32', 'q47'].forEach(q => questionTypes[q] = 'checkbox');
+
+    function saveForm() {
+      const formData = new FormData(form);
+      const data = {};
+
+      for (let i = 1; i <= 50; i++) {
+        const qName = `q${i}`;
+        if (questionTypes[qName] === 'checkbox') {
+          data[qName] = Array.from(formData.getAll(qName));
+        } else {
+          data[qName] = formData.get(qName) || '';
+        }
+      }
+
+      localStorage.setItem('test_data', JSON.stringify(data));
+    }
+
+    function restoreForm() {
+      const saved = JSON.parse(localStorage.getItem('test_data') || '{}');
+
+      for (let i = 1; i <= 50; i++) {
+        const qName = `q${i}`;
+
+        if (questionTypes[qName] === 'checkbox' && Array.isArray(saved[qName])) {
+          saved[qName].forEach(value => {
+            const checkbox = document.querySelector(`input[name="${qName}"][value="${value}"]`);
+            if (checkbox) checkbox.checked = true;
+          });
+        } else if (['dropdown', 'text'].includes(questionTypes[qName]) && saved[qName]) {
+          const input = form.elements[qName];
+          if (input) input.value = saved[qName];
+        }
+      }
+    }
+
+    function formatTime(seconds) {
+      const min = Math.floor(seconds / 60).toString().padStart(2, '0');
+      const sec = (seconds % 60).toString().padStart(2, '0');
+      return `${min}:${sec}`;
+    }
+
+    let timerStarted = false;
+    let timerInterval = null;
+
+    function startTimer() {
+      if (timerStarted) return;
+      timerStarted = true;
+
+      if (!localStorage.getItem('start_time')) {
+        localStorage.setItem('start_time', Date.now());
+      }
+
+      timerInterval = setInterval(() => {
+        const start = parseInt(localStorage.getItem('start_time'), 10);
+        const now = Date.now();
+        const elapsed = Math.floor((now - start) / 1000);
+        const remaining = Math.max(0, DURATION - elapsed);
+
+        localStorage.setItem('remaining_time', remaining);
+        timeDisplay.textContent = formatTime(remaining);
+
+        if (remaining <= 0) {
+          clearInterval(timerInterval);
+          document.getElementById('timer').style.display = 'none';
+          submitForm(true);
+        }
+      }, 1000);
+    }
+
+    function collectAnswers() {
+      const formData = new FormData(form);
+      const data = {};
+
+      for (let i = 1; i <= 50; i++) {
+        const qName = `q${i}`;
+        if (questionTypes[qName] === 'checkbox') {
+          data[qName] = Array.from(formData.getAll(qName));
+        } else {
+          data[qName] = formData.get(qName) || '';
+        }
+      }
+
+      return data;
+    }
+
+    function calculateScore(data) {
+      let score = 0;
+
+      for (let i = 1; i <= 50; i++) {
+        const qName = `q${i}`;
+        const answer = data[qName];
+        const correct = correctAnswers[qName];
+
+        if (questionTypes[qName] === 'checkbox') {
+          const normalizedAnswer = Array.isArray(answer) ? [...answer].sort() : [];
+          const normalizedCorrect = correct.split('').sort();
+
+          if (JSON.stringify(normalizedAnswer) === JSON.stringify(normalizedCorrect)) {
+            score++;
+          }
+        } else if (questionTypes[qName] === 'dropdown') {
+          if (answer === correct) score++;
+        } else if (questionTypes[qName] === 'text') {
+          if ((answer || '').trim().toLowerCase() === correct.toString().toLowerCase()) {
+            score++;
+          }
+        }
+      }
+
+      return score;
+    }
+
+    function buildFinalPayload(vkIdValue, data, score) {
+      return {
+        params: {
+          vk_id: Number(vkIdValue) || 0,
+          score: score,
+          stage_name: 'результат кот',
+          ...data
+        }
+      };
+    }
+
+    async function sendFinalRequest(vkIdValue, data, score) {
+      const payload = buildFinalPayload(vkIdValue, data, score);
+
+      const response = await fetch('https://webhooks.fut.ru/ft-dispather/requests', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      let responseBody = null;
+
+      try {
+        responseBody = await response.json();
+      } catch (_) {
+        try {
+          responseBody = await response.text();
+        } catch (_) {
+          responseBody = null;
+        }
+      }
+
+      return {
+        ok: response.ok,
+        status: response.status,
+        body: responseBody
+      };
+    }
+
+    async function submitForm(auto = false) {
+      const vkId = localStorage.getItem('test_email');
+      const data = collectAnswers();
+      const score = calculateScore(data);
+
+      console.log('Submitting final test payload', { vk_id: vkId, score, ...data });
+
+      const submitBtn = document.querySelector('#test-form button[type="submit"]');
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'ОТПРАВЛЯЕТСЯ...';
+      }
+
+      try {
+        const result = await sendFinalRequest(vkId, data, score);
+
+        if (!result.ok) {
+          console.error('Final webhook error:', result);
+          errorEl.textContent = 'Ошибка отправки теста. Пожалуйста, попробуй ещё раз.';
+          return;
+        }
+
+        localStorage.setItem('test_submitted', 'true');
+        localStorage.removeItem('start_time');
+        localStorage.removeItem('test_data');
+        localStorage.removeItem('remaining_time');
+        localStorage.removeItem('time_elapsed');
+
+        errorEl.textContent = '';
+        showView('view-finish');
+      } catch (err) {
+        console.error('Submission error:', err);
+        errorEl.textContent = 'Ошибка отправки теста';
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'ЗАВЕРШИТЬ';
+        }
+      }
+    }
+
+    document.getElementById('email-form').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const errorEl = document.getElementById('email-error');
+      errorEl.textContent = '';
+
+      const submitBtn = this.querySelector('button[type="submit"]');
+
+      if (!window.platformUserId) {
+        errorEl.textContent = 'Не удалось получить ID пользователя. Открой форму снова из VK.';
+        return;
+      }
+
+      try {
+        if (submitBtn) submitBtn.disabled = true;
+
+        const result = await sendIntroRequest(window.platformUserId);
+        console.log('Intro webhook result:', result);
+
+        if (result.isDuplicate) {
+          errorEl.textContent = 'Мы уже получили результат твоего теста и скоро вернёмся с ответом 😊';
+          return;
+        }
+
+        if (!result.ok) {
+          errorEl.textContent = 'Ошибка сервера. Повтори попытку позже.';
+          return;
+        }
+
+        localStorage.setItem('test_email', String(window.platformUserId));
+        showView('view-test');
+        restoreForm();
+        startTimer();
+      } catch (err) {
+        console.error(err);
+        errorEl.textContent = 'Ошибка сервера. Повтори попытку позже.';
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+      }
+    });
+
+    form.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+      }
+    });
+
+    form.addEventListener('input', saveForm);
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      errorEl.textContent = '';
+      submitForm(false);
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        const start = parseInt(localStorage.getItem('start_time') || '0', 10);
+        if (start) {
+          const now = Date.now();
+          const elapsed = Math.floor((now - start) / 1000);
+          localStorage.setItem('time_elapsed', elapsed);
+        }
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (localStorage.getItem('test_submitted') === 'true') {
+        showView('view-finish');
+      } else if (localStorage.getItem('test_email')) {
+        showView('view-test');
+        restoreForm();
+        startTimer();
+      } else {
+        showView('view-start');
+      }
+
+      try {
+        await detectVKUser();
+        console.log('platform:', window.userPlatform);
+        console.log('platform-id:', window.platformUserId);
+      } catch (err) {
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+</html>
